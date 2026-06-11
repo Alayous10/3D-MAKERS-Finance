@@ -132,7 +132,7 @@ async function handleLogin(e) {
   const loginBtn = document.getElementById('login-btn');
 
   if (!email || !password) {
-    showToast('يرجى إدخال البريد الإلكتروني وكلمة المرور', 'error');
+    alert('يرجى إدخال البريد الإلكتروني وكلمة المرور أولاً.');
     return;
   }
 
@@ -140,8 +140,11 @@ async function handleLogin(e) {
   loginBtn.innerText = 'جاري التحقق...';
 
   try {
-    if (!supabase) {
-      throw new Error('لم يتم تهيئة نظام قاعدة البيانات (Supabase). يرجى التأكد من اتصال الإنترنت.');
+    if (typeof supabase === 'undefined' || !supabase) {
+      alert('خطأ حرج: لم يتم تحميل قاعدة بيانات Supabase. قد يكون هناك حظر على شبكتك للرابط (CDN) أو مشكلة في الإنترنت.');
+      loginBtn.disabled = false;
+      loginBtn.innerText = 'تسجيل الدخول';
+      return;
     }
 
     const { data, error } = await supabase.auth.signInWithPassword({
@@ -155,7 +158,7 @@ async function handleLogin(e) {
         : error.message === 'Email not confirmed' 
           ? 'يرجى تأكيد بريدك الإلكتروني أولاً (راجع صندوق الوارد).' 
           : error.message;
-      showToast(errorMsg, 'error');
+      alert('فشل الدخول: ' + errorMsg);
       loginBtn.disabled = false;
       loginBtn.innerText = 'تسجيل الدخول';
     } else {
@@ -163,8 +166,7 @@ async function handleLogin(e) {
       // The onAuthStateChange listener will handle the transition
     }
   } catch (err) {
-    console.error('Login exception:', err);
-    showToast('حدث خطأ غير متوقع: ' + err.message, 'error');
+    alert('حدث خطأ غير متوقع: ' + err.message);
     loginBtn.disabled = false;
     loginBtn.innerText = 'تسجيل الدخول';
   }

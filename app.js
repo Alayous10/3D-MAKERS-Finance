@@ -7,7 +7,16 @@
 // INITIALIZATION & CONFIG
 // ═══════════════════════════════════════════════════════════
 
-const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+let supabase;
+try {
+  supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+} catch (e) {
+  console.error('Supabase SDK failed to initialize:', e);
+  document.addEventListener('DOMContentLoaded', () => {
+    const loginFooter = document.querySelector('.login-footer');
+    if (loginFooter) loginFooter.innerHTML = '<span style="color:#f43f5e;">❌ خطأ في تحميل النظام. يرجى تحديث الصفحة أو التحقق من اتصال الإنترنت.</span>';
+  });
+}
 
 let currentUser = null; // { id, email, name, role }
 let appData = {
@@ -34,16 +43,27 @@ const DROPDOWNS = {
 // ═══════════════════════════════════════════════════════════
 
 async function checkSession() {
-  const { data: { session }, error } = await supabase.auth.getSession();
-  if (error) {
-    console.error('Session error:', error);
+  if (!supabase) {
+    console.error('Supabase client not initialized');
     showLoginScreen();
     return;
   }
 
-  if (session) {
-    await loadUserProfile(session.user);
-  } else {
+  try {
+    const { data: { session }, error } = await supabase.auth.getSession();
+    if (error) {
+      console.error('Session error:', error);
+      showLoginScreen();
+      return;
+    }
+
+    if (session) {
+      await loadUserProfile(session.user);
+    } else {
+      showLoginScreen();
+    }
+  } catch (e) {
+    console.error('checkSession error:', e);
     showLoginScreen();
   }
 }

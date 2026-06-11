@@ -1246,10 +1246,14 @@ function initApp() {
   });
 }
 
-// Robust initialization: works even if DOMContentLoaded already fired
 if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', initApp);
 } else {
   initApp();
 }
+
+window.handleLogin = handleLogin;
+window.checkSession = checkSession;
+window.showLoginScreen = showLoginScreen;
+window.showAppScreen = showAppScreen;
 

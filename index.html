@@ -18,7 +18,7 @@
         <h2>3D Makers Finance</h2>
         <p>نظام الإدارة المالية للشراكة</p>
       </div>
-      <form id="login-form" onsubmit="if(typeof handleLogin === 'undefined') { alert('خطأ كارثي: لم يتم تحميل ملفات النظام (app.js). يرجى مسح الكاش (Ctrl+F5) أو استخدام متصفح خفي.'); return false; } else { handleLogin(event); return false; }">
+      <form id="login-form" onsubmit="return false;">
         <div class="form-group">
           <label for="login-email">البريد الإلكتروني / Email</label>
           <input type="email" id="login-email" required placeholder="mohammed@example.com">
@@ -27,7 +27,7 @@
           <label for="login-password">كلمة المرور / Password</label>
           <input type="password" id="login-password" required placeholder="••••••••">
         </div>
-        <button type="submit" class="btn btn-primary btn-block" id="login-btn">
+        <button type="button" class="btn btn-primary btn-block" id="login-btn" onclick="handleLogin(event)">
           تسجيل الدخول
         </button>
       </form>
@@ -132,12 +132,12 @@
         <h3 class="modal-title" id="modal-title" style="margin:0; font-weight:700;">إضافة سجل جديد</h3>
         <button class="btn-icon" type="button" onclick="closeModal()" style="font-size:1.2rem;">✕</button>
       </div>
-      <form id="modal-form" onsubmit="handleModalSubmit(event); return false;">
+      <form id="modal-form" onsubmit="return false;">
         <div id="modal-form-fields">
           <!-- Dynamically populated -->
         </div>
         <div class="modal-actions" style="margin-top:24px; border-top:1px solid var(--border-subtle); padding-top:16px;">
-          <button type="submit" class="btn btn-primary">حفظ</button>
+          <button type="button" class="btn btn-primary" onclick="handleModalSubmit(event)">حفظ</button>
           <button type="button" class="btn btn-ghost" onclick="closeModal()">إلغاء</button>
         </div>
       </form>

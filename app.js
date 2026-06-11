@@ -126,10 +126,15 @@ function renderUserBadge() {
 }
 
 async function handleLogin(e) {
-  e.preventDefault();
+  if (e) e.preventDefault();
   const email = document.getElementById('login-email').value;
   const password = document.getElementById('login-password').value;
   const loginBtn = document.getElementById('login-btn');
+
+  if (!email || !password) {
+    showToast('يرجى إدخال البريد الإلكتروني وكلمة المرور', 'error');
+    return;
+  }
 
   loginBtn.disabled = true;
   loginBtn.innerText = 'جاري التحقق...';

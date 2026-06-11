@@ -151,5 +151,21 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="supabase-config.js?v=1.3" charset="UTF-8"></script>
   <script src="app.js?v=1.3" charset="UTF-8"></script>
+  <script>
+    setTimeout(function() {
+      const footer = document.querySelector('.login-footer');
+      if (footer) {
+         footer.innerHTML = "Diagnostics: " + 
+           "handleLogin=" + typeof window.handleLogin + ", " +
+           "supabase=" + typeof window.supabase + ", " +
+           "SUPABASE_URL=" + typeof window.SUPABASE_URL + ", " +
+           "scripts=" + document.scripts.length;
+      }
+      // Force global binding safely
+      if (typeof handleLogin !== 'undefined') {
+        window.handleLogin = handleLogin;
+      }
+    }, 1000);
+  </script>
 </body>
 </html>

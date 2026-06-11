@@ -81,7 +81,7 @@ function showAppScreen() {
 }
 
 async function loadUserProfile(authUser) {
-  const { data: profile, error } = await supabase
+  const { data: profile, error } = await supabaseClient
     .from('users_profile')
     .select('*')
     .eq('id', authUser.id)
@@ -140,8 +140,8 @@ async function handleLogin(e) {
   loginBtn.innerText = 'جاري التحقق...';
 
   try {
-    if (typeof supabase === 'undefined' || !supabase) {
-      alert('خطأ حرج: لم يتم تحميل قاعدة بيانات Supabase. قد يكون هناك حظر على شبكتك للرابط (CDN) أو مشكلة في الإنترنت.');
+    if (typeof supabaseClient === 'undefined' || !supabaseClient) {
+      alert('خطأ فني: لم يتم تحميل مكتبة الاتصال بقاعدة البيانات. تأكد من اتصال الإنترنت.');
       loginBtn.disabled = false;
       loginBtn.innerText = 'تسجيل الدخول';
       return;
@@ -239,7 +239,7 @@ async function updateRecord(table, id, field, value) {
     item[field] = value;
   }
 
-  const { error } = await supabase
+  const { error } = await supabaseClient
     .from(table)
     .update({ [field]: value })
     .eq('id', id);
@@ -260,7 +260,7 @@ async function deleteRecord(table, id) {
   }
 
   if (confirm('هل أنت متأكد من رغبتك في حذف هذا السجل بشكل نهائي؟')) {
-    const { error } = await supabase
+    const { error } = await supabaseClient
       .from(table)
       .delete()
       .eq('id', id);
@@ -283,7 +283,7 @@ async function updateAssumption(field, value) {
 
   appData.assumptions[field] = value;
 
-  const { error } = await supabase
+  const { error } = await supabaseClient
     .from('assumptions')
     .update({ [field]: value })
     .eq('id', 1);
@@ -1182,7 +1182,7 @@ async function handleModalSubmit(e) {
     data.created_by = currentUser.id;
   }
 
-  const { error } = await supabase
+  const { error } = await supabaseClient
     .from(activeTab)
     .insert([data]);
 
@@ -1218,7 +1218,7 @@ function initApp() {
   checkSession();
 
   // 2. Auth State Change Listener
-  if (supabase) {
+  if (supabaseClient) {
     supabaseClient.auth.onAuthStateChange(async (event, session) => {
       if (event === 'SIGNED_IN' && session) {
         await loadUserProfile(session.user);

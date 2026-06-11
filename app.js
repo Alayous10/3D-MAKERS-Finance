@@ -134,17 +134,34 @@ async function handleLogin(e) {
   loginBtn.disabled = true;
   loginBtn.innerText = 'جاري التحقق...';
 
-  const { data, error } = await supabase.auth.signInWithPassword({
-    email,
-    password
-  });
+  try {
+    if (!supabase) {
+      throw new Error('لم يتم تهيئة نظام قاعدة البيانات (Supabase). يرجى التأكد من اتصال الإنترنت.');
+    }
 
-  if (error) {
-    showToast(error.message === 'Invalid login credentials' ? 'البريد الإلكتروني أو كلمة المرور غير صحيحة' : error.message, 'error');
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email,
+      password
+    });
+
+    if (error) {
+      const errorMsg = error.message === 'Invalid login credentials' 
+        ? 'البريد الإلكتروني أو كلمة المرور غير صحيحة' 
+        : error.message === 'Email not confirmed' 
+          ? 'يرجى تأكيد بريدك الإلكتروني أولاً (راجع صندوق الوارد).' 
+          : error.message;
+      showToast(errorMsg, 'error');
+      loginBtn.disabled = false;
+      loginBtn.innerText = 'تسجيل الدخول';
+    } else {
+      showToast('تم تسجيل الدخول بنجاح', 'success');
+      // The onAuthStateChange listener will handle the transition
+    }
+  } catch (err) {
+    console.error('Login exception:', err);
+    showToast('حدث خطأ غير متوقع: ' + err.message, 'error');
     loginBtn.disabled = false;
     loginBtn.innerText = 'تسجيل الدخول';
-  } else {
-    showToast('تم تسجيل الدخول بنجاح', 'success');
   }
 }
 

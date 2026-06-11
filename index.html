@@ -18,7 +18,7 @@
         <h2>3D Makers Finance</h2>
         <p>نظام الإدارة المالية للشراكة</p>
       </div>
-      <form id="login-form">
+      <form id="login-form" onsubmit="handleLogin(event); return false;">
         <div class="form-group">
           <label for="login-email">البريد الإلكتروني / Email</label>
           <input type="email" id="login-email" required placeholder="mohammed@example.com">
@@ -132,7 +132,7 @@
         <h3 class="modal-title" id="modal-title" style="margin:0; font-weight:700;">إضافة سجل جديد</h3>
         <button class="btn-icon" type="button" onclick="closeModal()" style="font-size:1.2rem;">✕</button>
       </div>
-      <form id="modal-form">
+      <form id="modal-form" onsubmit="handleModalSubmit(event); return false;">
         <div id="modal-form-fields">
           <!-- Dynamically populated -->
         </div>

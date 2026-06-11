@@ -7,9 +7,9 @@
 // INITIALIZATION & CONFIG
 // ═══════════════════════════════════════════════════════════
 
-let supabase;
+let supabaseClient;
 try {
-  supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 } catch (e) {
   console.error('Supabase SDK failed to initialize:', e);
   document.addEventListener('DOMContentLoaded', () => {
@@ -43,14 +43,14 @@ const DROPDOWNS = {
 // ═══════════════════════════════════════════════════════════
 
 async function checkSession() {
-  if (!supabase) {
+  if (!supabaseClient) {
     console.error('Supabase client not initialized');
     showLoginScreen();
     return;
   }
 
   try {
-    const { data: { session }, error } = await supabase.auth.getSession();
+    const { data: { session }, error } = await supabaseClient.auth.getSession();
     if (error) {
       console.error('Session error:', error);
       showLoginScreen();
@@ -147,7 +147,7 @@ async function handleLogin(e) {
       return;
     }
 
-    const { data, error } = await supabase.auth.signInWithPassword({
+    const { data, error } = await supabaseClient.auth.signInWithPassword({
       email,
       password
     });
@@ -173,7 +173,7 @@ async function handleLogin(e) {
 }
 
 async function logout() {
-  const { error } = await supabase.auth.signOut();
+  const { error } = await supabaseClient.auth.signOut();
   if (error) {
     showToast('حدث خطأ أثناء تسجيل الخروج', 'error');
   } else {
@@ -198,13 +198,13 @@ async function loadAllData() {
       expensesRes,
       advertisingRes
     ] = await Promise.all([
-      supabase.from('assumptions').select('*').eq('id', 1).single(),
-      supabase.from('capital').select('*').order('date', { ascending: true }),
-      supabase.from('products').select('*').order('name', { ascending: true }),
-      supabase.from('purchases').select('*').order('date', { ascending: true }),
-      supabase.from('sales').select('*').order('date', { ascending: true }),
-      supabase.from('expenses').select('*').order('date', { ascending: true }),
-      supabase.from('advertising').select('*').order('date', { ascending: true })
+      supabaseClient.from('assumptions').select('*').eq('id', 1).single(),
+      supabaseClient.from('capital').select('*').order('date', { ascending: true }),
+      supabaseClient.from('products').select('*').order('name', { ascending: true }),
+      supabaseClient.from('purchases').select('*').order('date', { ascending: true }),
+      supabaseClient.from('sales').select('*').order('date', { ascending: true }),
+      supabaseClient.from('expenses').select('*').order('date', { ascending: true }),
+      supabaseClient.from('advertising').select('*').order('date', { ascending: true })
     ]);
 
     appData = {
@@ -1219,7 +1219,7 @@ function initApp() {
 
   // 2. Auth State Change Listener
   if (supabase) {
-    supabase.auth.onAuthStateChange(async (event, session) => {
+    supabaseClient.auth.onAuthStateChange(async (event, session) => {
       if (event === 'SIGNED_IN' && session) {
         await loadUserProfile(session.user);
       } else if (event === 'SIGNED_OUT') {

@@ -1189,19 +1189,21 @@ function showToast(message, type = 'success') {
 // LIFE CYCLE & LISTENERS
 // ═══════════════════════════════════════════════════════════
 
-document.addEventListener('DOMContentLoaded', () => {
+function initApp() {
   // 1. Session & Auth Check
   checkSession();
 
   // 2. Auth State Change Listener
-  supabase.auth.onAuthStateChange(async (event, session) => {
-    if (event === 'SIGNED_IN' && session) {
-      await loadUserProfile(session.user);
-    } else if (event === 'SIGNED_OUT') {
-      currentUser = null;
-      showLoginScreen();
-    }
-  });
+  if (supabase) {
+    supabase.auth.onAuthStateChange(async (event, session) => {
+      if (event === 'SIGNED_IN' && session) {
+        await loadUserProfile(session.user);
+      } else if (event === 'SIGNED_OUT') {
+        currentUser = null;
+        showLoginScreen();
+      }
+    });
+  }
 
   // 3. Form Handlers
   const loginForm = document.getElementById('login-form');
@@ -1218,4 +1220,12 @@ document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('.tab-nav .tab-btn').forEach(btn => {
     btn.addEventListener('click', () => switchTab(btn.dataset.tab));
   });
-});
+}
+
+// Robust initialization: works even if DOMContentLoaded already fired
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initApp);
+} else {
+  initApp();
+}
+

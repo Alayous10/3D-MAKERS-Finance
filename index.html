@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="نظام إدارة مالية احترافي لشركة 3D Makers — طباعة ثلاثية الأبعاد. لوحة تحكم، حاسبة تكلفة، سجل مبيعات، ومتابعة استرداد رأس المال.">
+  <title>3D Makers Finance — نظام الإدارة المالية</title>
+  <link rel="stylesheet" href="index.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🖨️</text></svg>">
+</head>
+<body>
+
+  <!-- ═══ Login Container ═══ -->
+  <div class="login-container" id="login-container" style="display: none;">
+    <div class="login-card animate-fade-in">
+      <div class="login-header">
+        <div class="login-logo">🖨️</div>
+        <h2>3D Makers Finance</h2>
+        <p>نظام الإدارة المالية للشراكة</p>
+      </div>
+      <form id="login-form">
+        <div class="form-group">
+          <label for="login-email">البريد الإلكتروني / Email</label>
+          <input type="email" id="login-email" required placeholder="mohammed@example.com">
+        </div>
+        <div class="form-group">
+          <label for="login-password">كلمة المرور / Password</label>
+          <input type="password" id="login-password" required placeholder="••••••••">
+        </div>
+        <button type="submit" class="btn btn-primary btn-block" id="login-btn">
+          تسجيل الدخول
+        </button>
+      </form>
+      <div class="login-footer">
+        في حال عدم امتلاك حساب، يرجى التواصل مع المدير المالي (محمد).
+      </div>
+    </div>
+  </div>
+
+  <div class="app-container" id="app-container" style="display: none;">
+
+    <!-- ═══ Header ═══ -->
+    <header class="app-header">
+      <div class="header-main">
+        <div class="logo-section">
+          <div class="logo-icon">🖨️</div>
+          <h1 class="app-title">3D Makers Finance</h1>
+        </div>
+        <div class="user-badge" id="user-badge">
+          <!-- Loaded dynamically via JS -->
+        </div>
+      </div>
+      <p class="app-subtitle">شراكة محمد (رأس المال) & نبيل (التشغيل والتسويق) — نظام الإدارة المالية</p>
+    </header>
+
+    <!-- ═══ Tab Navigation ═══ -->
+    <nav class="tab-nav" role="tablist">
+      <button class="tab-btn active" data-tab="dashboard" role="tab" id="tab-btn-dashboard">
+        <span class="tab-icon">📊</span>
+        <span class="tab-text">لوحة التحكم</span>
+      </button>
+      <button class="tab-btn" data-tab="capital" role="tab" id="tab-btn-capital">
+        <span class="tab-icon">💰</span>
+        <span class="tab-text">رأس المال</span>
+      </button>
+      <button class="tab-btn" data-tab="products" role="tab" id="tab-btn-products">
+        <span class="tab-icon">🧮</span>
+        <span class="tab-text">حاسبة التكلفة</span>
+      </button>
+      <button class="tab-btn" data-tab="purchases" role="tab" id="tab-btn-purchases">
+        <span class="tab-icon">🛍️</span>
+        <span class="tab-text">المشتريات</span>
+      </button>
+      <button class="tab-btn" data-tab="sales" role="tab" id="tab-btn-sales">
+        <span class="tab-icon">💵</span>
+        <span class="tab-text">المبيعات</span>
+      </button>
+      <button class="tab-btn" data-tab="expenses" role="tab" id="tab-btn-expenses">
+        <span class="tab-icon">📋</span>
+        <span class="tab-text">المصاريف</span>
+      </button>
+      <button class="tab-btn" data-tab="advertising" role="tab" id="tab-btn-advertising">
+        <span class="tab-icon">📣</span>
+        <span class="tab-text">الإعلانات</span>
+      </button>
+    </nav>
+
+    <!-- ═══ Tab Content ═══ -->
+    <main class="tab-content">
+      <div class="tab-pane active" id="tab-dashboard" role="tabpanel">
+        <!-- Rendered by JS -->
+      </div>
+
+      <div class="tab-pane" id="tab-capital" role="tabpanel">
+        <!-- Rendered by JS -->
+      </div>
+
+      <div class="tab-pane" id="tab-products" role="tabpanel">
+        <!-- Rendered by JS -->
+      </div>
+
+      <div class="tab-pane" id="tab-purchases" role="tabpanel">
+        <!-- Rendered by JS -->
+      </div>
+
+      <div class="tab-pane" id="tab-sales" role="tabpanel">
+        <!-- Rendered by JS -->
+      </div>
+
+      <div class="tab-pane" id="tab-expenses" role="tabpanel">
+        <!-- Rendered by JS -->
+      </div>
+
+      <div class="tab-pane" id="tab-advertising" role="tabpanel">
+        <!-- Rendered by JS -->
+      </div>
+    </main>
+
+    <!-- ═══ Footer ═══ -->
+    <footer style="text-align:center; padding: 20px 0 40px; border-top: 1px solid rgba(255,255,255,0.06);">
+      <p style="font-size: 0.75rem; color: var(--text-muted);">
+        3D Makers Finance System — Built for Mohammed & Nabil Partnership
+      </p>
+    </footer>
+
+  </div>
+
+  <!-- ═══ Add Row Modal ═══ -->
+  <div class="modal-overlay" id="add-modal">
+    <div class="modal-content">
+      <div class="modal-header" style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; border-bottom:1px solid var(--border-subtle); padding-bottom:12px;">
+        <h3 class="modal-title" id="modal-title" style="margin:0; font-weight:700;">إضافة سجل جديد</h3>
+        <button class="btn-icon" type="button" onclick="closeModal()" style="font-size:1.2rem;">✕</button>
+      </div>
+      <form id="modal-form">
+        <div id="modal-form-fields">
+          <!-- Dynamically populated -->
+        </div>
+        <div class="modal-actions" style="margin-top:24px; border-top:1px solid var(--border-subtle); padding-top:16px;">
+          <button type="submit" class="btn btn-primary">حفظ</button>
+          <button type="button" class="btn btn-ghost" onclick="closeModal()">إلغاء</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div class="toast" id="toast"></div>
+
+  <!-- Supabase & App Config / Logic -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-config.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

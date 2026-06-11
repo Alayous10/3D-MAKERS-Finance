@@ -1,0 +1,3 @@
+// Supabase configuration details for 3D Makers Finance
+const SUPABASE_URL = "https://jzksuwecsrmgmnmvxxgs.supabase.co";
+const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp6a3N1d2Vjc3JtZ21ubXZ4eGdzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODExNTE1NTAsImV4cCI6MjA5NjcyNzU1MH0.V9gfsjTiwwr7e1ZqklcXL4IGEHH_eDX1R7jSLtdxflw";
